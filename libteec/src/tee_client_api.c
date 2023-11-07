@@ -95,8 +95,11 @@ static int teec_open_dev(const char *devname, const char *capabilities,
 	memset(&vers, 0, sizeof(vers));
 
 	fd = open(devname, O_RDWR);
-	if (fd < 0)
+	if (fd < 0) {
+		EMSG("Err 890");
 		return -1;
+	}
+		
 
 	if (ioctl(fd, TEE_IOC_VERSION, &vers)) {
 		EMSG("TEE_IOC_VERSION failed");
@@ -164,7 +167,10 @@ TEEC_Result TEEC_InitializeContext(const char *name, TEEC_Context *ctx)
 	size_t n = 0;
 
 	if (!ctx)
+	{
+		EMSG("Err - 123 \n");
 		return TEEC_ERROR_BAD_PARAMETERS;
+	}
 
 	for (n = 0; n < TEEC_MAX_DEV_SEQ; n++) {
 		uint32_t gen_caps = 0;
@@ -178,7 +184,7 @@ TEEC_Result TEEC_InitializeContext(const char *name, TEEC_Context *ctx)
 			return TEEC_SUCCESS;
 		}
 	}
-
+	EMSG("Err - 567 \n");
 	return TEEC_ERROR_ITEM_NOT_FOUND;
 }
 
